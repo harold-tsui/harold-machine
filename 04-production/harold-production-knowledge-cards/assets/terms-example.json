@@ -1,0 +1,103 @@
+{
+  "categories": {
+    "metric": "数据指标",
+    "method": "方法论",
+    "risk": "合规风险"
+  },
+  "risks": {
+    "advertising": "宣传合规",
+    "dataPrivacy": "数据合规"
+  },
+  "terms": [
+    {
+      "termId": "exm-0001",
+      "termZh": "完播率",
+      "termEn": "Completion Rate",
+      "category": "metric",
+      "definition": "看完视频的人数占开始播放人数的比例，用来衡量内容把人留到结尾的能力，是这个平台分配流量时最看重的指标之一。",
+      "plainAnalogy": "像电影院里坐到最后的人数，跟买了票进场的总人数之比。",
+      "whyItMatters": "它决定内容能不能拿到下一轮推荐，开头再抓人也补不回中段流失的人。",
+      "misuse": "很多人把完播率低直接判成内容差，其实常见原因是开头三秒没给出继续看的理由，问题只在开头。",
+      "relatedTerms": ["互动率", "平均播放时长", "钩子"],
+      "metricHint": "",
+      "riskFlag": "none",
+      "sourceType": "industryConsensus",
+      "confidence": 0.9
+    },
+    {
+      "termId": "exm-0002",
+      "termZh": "互动率",
+      "termEn": "Engagement Rate",
+      "category": "metric",
+      "definition": "点赞、评论、分享、收藏四类行为之和占总播放量的比例，反映观众看完之后愿不愿意留下动作。",
+      "plainAnalogy": "像讲座结束后举手提问和鼓掌的人数，占到场总人数的比例。",
+      "whyItMatters": "互动是内容价值的二次确认，互动高的内容更容易被推到非粉丝人群。",
+      "misuse": "把点赞当互动全部，忽略评论与分享；不同平台的权重差别很大，跨平台比这个数没有意义。",
+      "relatedTerms": ["完播率", "粉丝转化率", "行动号召"],
+      "metricHint": "",
+      "riskFlag": "none",
+      "sourceType": "industryConsensus",
+      "confidence": 0.85
+    },
+    {
+      "termId": "exm-0003",
+      "termZh": "行动号召",
+      "termEn": "Call to Action",
+      "category": "method",
+      "definition": "在内容结尾明确告诉观众下一步做什么，例如关注、评论、领取清单，是把内容消费转成具体行为的那一步。",
+      "plainAnalogy": "像导购在你试完衣服后直接说去哪里结账，而不是等你自行领悟。",
+      "whyItMatters": "多数观众不会主动想下一步动作，不说就等于默认放弃这次转化。",
+      "misuse": "以为结尾加一句关注就算完事；没有说明关注后能得到什么，号召就没有落点。",
+      "relatedTerms": ["粉丝转化率", "钩子"],
+      "metricHint": "",
+      "riskFlag": "none",
+      "sourceType": "industryConsensus",
+      "confidence": 0.8
+    },
+    {
+      "termId": "exm-0004",
+      "termZh": "钩子",
+      "termEn": "Hook",
+      "category": "method",
+      "definition": "内容开头用来制造继续看下去理由的那句话或那个画面，通常承担悬念、冲突、利益承诺三类功能。",
+      "plainAnalogy": "像书的封面和第一页，决定读者是买下来还是放回书架。",
+      "whyItMatters": "开头决定绝大多数观众的留存，后面内容再好也要先跨过这一关。",
+      "misuse": "把标题党当钩子；承诺了内容给不出的东西，短期留人、长期掉信任。",
+      "relatedTerms": ["完播率", "行动号召"],
+      "metricHint": "",
+      "riskFlag": "advertising",
+      "sourceType": "industryConsensus",
+      "confidence": 0.8
+    },
+    {
+      "termId": "exm-0005",
+      "termZh": "粉丝转化率",
+      "termEn": "Follower Conversion Rate",
+      "category": "metric",
+      "definition": "一条内容带来的新增关注数占总播放量的比例，衡量内容把人从观众变成长期读者或观众的能力。",
+      "plainAnalogy": "像试吃之后真正买了整盒的顾客比例。",
+      "whyItMatters": "播放是一次性的，粉丝是复用的；只看播放不看转化，账号会一直在原地拉新。",
+      "misuse": "把这条爆款的涨粉当成账号能力，忽略爆款来自选题而不是人设，下一条就掉回原点。",
+      "relatedTerms": ["主页转化率", "互动率", "行动号召"],
+      "metricHint": "",
+      "riskFlag": "none",
+      "sourceType": "industryConsensus",
+      "confidence": 0.85
+    },
+    {
+      "termId": "exm-0006",
+      "termZh": "数据脱敏",
+      "termEn": "Data Masking",
+      "category": "risk",
+      "definition": "在保留数据可用性的前提下，把姓名、手机号、身份证号等可识别个人的字段替换或遮蔽，避免在分析、演示与共享环节泄露个人信息。",
+      "plainAnalogy": "像给证件照打码：还能看出是本人，但别人拿不到原件。",
+      "whyItMatters": "涉及个人信息处理的场景，未脱敏的数据一旦外发就构成不可撤回的泄露。",
+      "misuse": "以为删掉姓名列就安全；手机号、订单号、精确地址的组合仍然能定位到具体的人。",
+      "relatedTerms": ["最小权限", "个人信息", "数据泄露"],
+      "metricHint": "",
+      "riskFlag": "dataPrivacy",
+      "sourceType": "industryConsensus",
+      "confidence": 0.9
+    }
+  ]
+}
