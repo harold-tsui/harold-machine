@@ -2,8 +2,9 @@
 
 > 定位：面向生产使用的可分发 Skill 库。脱敏、可复用、可验收；不做技能合集，只做少数能被讲清楚、能被检查的技能。
 > 更新：2026-11-21
-> 仓库：`harold-tsui/harold-machine`（公开）。入口 `using-harold/` 建议单独链接，业务技能按需逐个链接。
-> 本仓为发布版本；开发与过程记录在私有仓 `harold-tsui/harold-machine-dev`。
+> 仓库：开发仓 `harold-tsui/harold-machine-dev`（私有）；发布仓 `harold-tsui/harold-machine`（公开），内容由开发仓 `src/` 生成。入口 `using-harold/` 建议单独链接，业务技能按需逐个链接。
+> 过程记录（盘点、迁移台账、试跑与修复）见 `dev/docs/migration-log.md`。
+> 下图为发布仓布局；开发仓把技能放在 `src/`，目录与留档放在 `dev/`。
 
 ---
 
