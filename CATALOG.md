@@ -2,7 +2,7 @@
 
 > 定位：面向生产使用的可分发 Skill 库。脱敏、可复用、可验收；不做技能合集，只做少数能被讲清楚、能被检查的技能。
 > 更新：2026-11-21
-> 仓库：开发仓 `harold-tsui/harold-machine-dev`（私有）；发布仓 `harold-tsui/harold-machine`（公开），内容由开发仓 `src/` 生成。入口 `using-harold/` 建议单独链接，业务技能按需逐个链接。
+> 仓库：开发仓 `harold-tsui/harold-machine-dev`（私有）；发布仓 `harold-tsui/harold-machine`（公开），内容由开发仓 `src/` 生成。入口 `using-harold-machine/` 建议单独链接，业务技能按需逐个链接。
 > 过程记录（盘点、迁移台账、试跑与修复）见 `dev/docs/migration-log.md`。
 > 下图为发布仓布局；开发仓把技能放在 `src/`，目录与留档放在 `dev/`。
 
@@ -20,18 +20,18 @@
 | L3 生产 | 把结论变成可交付物 | `harold-production-topic`、`harold-production-copy`、`harold-production-pack`、`harold-production-polish`、`harold-production-slides`、`harold-production-visual`、`harold-production-web-story`、`harold-production-knowledge-cards` |
 | L4 运营 | 让事情闭环、知识留痕 | `harold-ops-weekly`、`harold-ops-wechat`、`harold-ops-video-analysis`、`harold-ops-xiaohongshu`、`harold-ops-finance` |
 
-入口技能 `using-harold` 独立于五层，放在仓库根目录，负责每轮分诊到唯一主技能；它是唯一不以 `harold-` 开头的技能。
+入口技能 `using-harold-machine` 独立于五层，放在仓库根目录，负责每轮分诊到唯一主技能；它是唯一不以 `harold-` 开头的技能。
 
 ### 目录与文件规范
 
 - **CATALOG.md**：技能库的清单文件，给人看，不装进 AI。
-- **磁盘目录**：按 L0–L4 分五层，一层一个数字目录；业务技能文件夹放在所属层的目录里，不跨层、不平铺。入口技能 `using-harold` 例外，放在根目录。
+- **磁盘目录**：按 L0–L4 分五层，一层一个数字目录；业务技能文件夹放在所属层的目录里，不跨层、不平铺。入口技能 `using-harold-machine` 例外，放在根目录。
 
 ```text
 harold-machine/
 ├── README.md
 ├── CATALOG.md
-├── using-harold/             # 入口分诊，先于五层
+├── using-harold-machine/     # 入口分诊，先于五层
 ├── 01-governance/            # L0 治理
 │   └── harold-gov-gate/
 ├── 02-decision/              # L1 判断
@@ -66,9 +66,9 @@ harold-machine/
 └── evals/          # 验收用例：输入 → 期望特征
 ```
 
-- slug 统一为 `harold-<层>-<技能>`，全小写 ASCII；层目录统一为 `0N-<层词>`，层词与 slug 中段一致：`01-governance`(gov) / `02-decision` / `03-research` / `04-production` / `05-operations`(ops)。入口技能 `using-harold` 是唯一例外，与 `using-superpowers`、`using-nucleus` 同构。
+- slug 统一为 `harold-<层>-<技能>`，全小写 ASCII；层目录统一为 `0N-<层词>`，层词与 slug 中段一致：`01-governance`(gov) / `02-decision` / `03-research` / `04-production` / `05-operations`(ops)。入口技能 `using-harold-machine` 是唯一例外，与 `using-superpowers`、`using-nucleus` 同构。
 - 一个技能 = 一个文件夹，文件夹名就是 slug，入口只有一个 `SKILL.md`。
-- `using-harold` 是唯一入口技能：每轮先分诊到唯一主技能；它只做路由，不承接业务交付，不计入「业务技能」上限（18 个）。
+- `using-harold-machine` 是唯一入口技能：每轮先分诊到唯一主技能；它只做路由，不承接业务交付，不计入「业务技能」上限（18 个）。
 - 同层第 2 个技能接在后面，如 `harold-gov-vetter`、`harold-gov-registry`，放进 `01-governance/` 与已有技能**并列**，不放进它的文件夹里。
 - 新增层才加新数字目录；不做二级分类，避免同一职能被拆散。
 - `references/`、`evals/` 是技能的内部件，不是独立技能。
@@ -90,7 +90,7 @@ harold-machine/
 
 | slug | 解决什么 | 可教方法 / 素材 | 验收标准 |
 |---|---|---|---|
-| `using-harold` | 每轮任务先分诊到唯一主技能，定跨阶段顺序，无命中直接做 | 路由表、五条排序规则、点名优先、红牌清单、交接规则 | 主技能唯一且有序（多阶段给先后，不并列；不命中写"不调用"）；真调用不空谈（无 Skill 机制则读 `SKILL.md`）；不越权改判；依据可核；顺序与调用关系一致；点名直接进入不擅自改派；原生能力不硬套；交接写明下游与理由 |
+| `using-harold-machine` | 每轮任务先分诊到唯一主技能，定跨阶段顺序，无命中直接做 | 路由表、五条排序规则、点名优先、红牌清单、交接规则 | 主技能唯一且有序（多阶段给先后，不并列；不命中写"不调用"）；真调用不空谈（无 Skill 机制则读 `SKILL.md`）；不越权改判；依据可核；顺序与调用关系一致；点名直接进入不擅自改派；原生能力不硬套；交接写明下游与理由 |
 | `harold-gov-gate` | 新 skill 入库前的准入、风险评估与验收用例 | 准入四问、审查清单、反例库 | 四问逐项有证据；风险覆盖权限或外发且标来源与许可、证据（文件:行号或可复现检查方式）；三条用例可执行（正常/边界/误导各一）；结论与四问一致；不替候选补能力；登记行可直接粘进技能表；复审触发器已设 |
 | `harold-decision-review` | 立项、取舍、资源分配的对抗式评审 | 入口分级、三问可逆性、预验尸、条件式建议 | 复述问题与可逆性；选项 ≥3 且含"不做/维持现状"；隐含假设 ≥3 逐条标验证状态；预验尸 ≥3 条；建议为条件式含触发指标；有复盘日期；待确认问题一次 1 个、不替用户拍板 |
 | `harold-decision-thinking` | 内容型个人 IP 生意的诊断与取舍判断 | 11 条底层原则、9 个诊断模块、黄灯模式、七组分歧裁决 | 适配性先声明；结论先行且引原则编号；进退取舍给中间层；现实约束至少查两项；主模块唯一；动作带验证口径与时间尺度 |
@@ -121,7 +121,7 @@ harold-machine/
 ### 调用关系
 
 ```text
-using-harold                          ← 先分诊：本轮用哪个技能、按什么顺序
+using-harold-machine                      ← 先分诊：本轮用哪个技能、按什么顺序
       │
       ├─ harold-gov-gate              ← 决定哪些技能存在
       ├─ harold-research-brief        → 产出带等级的证据
@@ -149,7 +149,7 @@ using-harold                          ← 先分诊：本轮用哪个技能、�
 
 ## 三、明确不做
 
-- 不做技能超市：业务技能常驻控制在 18 个以内（当前 18），另设 1 个入口分诊技能 `using-harold`，宁缺毋滥。
+- 不做技能超市：业务技能常驻控制在 18 个以内（当前 18），另设 1 个入口分诊技能 `using-harold-machine`，宁缺毋滥。
 - 不封装模型原生能力：搜索、写代码、读文件、常规写作。
 - 不复制开源文件：只借鉴交互设计与流程结构；官方能力直接用官方版。
 - 不建无验收的技能：写不出"怎样算通过"就不建。

@@ -16,7 +16,7 @@
 | L3 生产 | 把结论变成可交付物 | 8 |
 | L4 运营 | 让事情闭环、知识留痕 | 5 |
 
-外加入口技能 `using-harold`：每轮先分诊出唯一主技能，再动手；没有合适的就直接做，不硬套。
+外加入口技能 `using-harold-machine`：每轮先分诊出唯一主技能，再动手；没有合适的就直接做，不硬套。
 
 完整清单、触发说法与调用关系见 [CATALOG.md](CATALOG.md)。
 
@@ -31,7 +31,7 @@
 harold-machine/
 ├── README.md
 ├── CATALOG.md
-├── using-harold/             # 入口分诊，先于五层
+├── using-harold-machine/     # 入口分诊，先于五层
 ├── 01-governance/            # L0 治理
 ├── 02-decision/              # L1 判断
 ├── 03-research/              # L2 研究
@@ -56,13 +56,13 @@ harold-machine/
 
 1. 先读 [CATALOG.md](CATALOG.md)，按任务落到某一层。
 2. 把需要的一个或多个技能目录链接到 AI 客户端的 skills 目录（逐个链接，与目录层级无关）。
-3. 入口 `using-harold/` 建议单独链接：它负责分诊，不替代任何业务技能执行。
+3. 入口 `using-harold-machine/` 建议单独链接：它负责分诊，不替代任何业务技能执行。
 
 以 Claude Code 的 `~/.claude/skills/` 为例，逐个软链：
 
 ```bash
 mkdir -p ~/.claude/skills
-ln -s "$PWD/using-harold" ~/.claude/skills/using-harold
+ln -s "$PWD/using-harold-machine" ~/.claude/skills/using-harold-machine
 ln -s "$PWD/02-decision/harold-decision-review" ~/.claude/skills/harold-decision-review
 ```
 
