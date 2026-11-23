@@ -4,7 +4,8 @@
 > 更新：2026-11-21
 > 仓库：开发仓 `harold-tsui/harold-machine-dev`（私有）；发布仓 `harold-tsui/harold-machine`（公开），内容由开发仓 `src/` 生成。入口 `using-harold-machine/` 建议单独链接，业务技能按需逐个链接。
 > 过程记录（盘点、迁移台账、试跑与修复）见 `dev/docs/migration-log.md`。
-> 下图为发布仓布局；开发仓把技能放在 `src/`，目录与留档放在 `dev/`。
+> 下图为发布仓布局；开发仓把技能放在 `src/`，目录、留档与对外文档放在 `dev/`。
+> 对外文档：`README.md` 定位｜`INSTALL.md` 安装｜`USAGE.md` 使用手册（位于仓库根目录；开发仓源文件在 `dev/public/`）。
 
 ---
 
