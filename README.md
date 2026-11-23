@@ -84,8 +84,6 @@ git clone https://github.com/harold-tsui/harold-machine.git
 | [USAGE.md](USAGE.md) | 一轮任务怎么走、怎么选层、常见误用 |
 | [CATALOG.md](CATALOG.md) | 18 个技能分别解决什么、怎么串 |
 
-技能自身的结构（`SKILL.md` / `evals/` / `references/`）属于开发约定，见文档地图之外的仓库说明。
-
 ## 一个技能里有什么
 
 ```text
@@ -103,9 +101,8 @@ git clone https://github.com/harold-tsui/harold-machine.git
 
 `harold` 是作者的名字，也是《疑犯追踪》里造那台机器的人的名字。机器的流程是「输入 → 判定 relevant / irrelevant → 派人执行 → 自我纠偏」，和这里的 L0 → L4 是同一条链。
 
-## 状态
+## 组成
 
 - 18 个业务技能 + 1 个入口
 - 每个技能都有 `evals/cases.md`，其评分项与 `SKILL.md` 的验收标准条数、顺序、语义一一对应
 - 判定行由 `harold-gov-gate` 统一维护，其他技能只引用不自造阈值
-- 本仓由开发仓的 `src/` 生成，不直接编辑

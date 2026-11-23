@@ -1,11 +1,7 @@
-# harold-machine · 目录 v1.9
+# harold-machine · 技能目录
 
-> 定位：面向生产使用的可分发 Skill 库。脱敏、可复用、可验收；不做技能合集，只做少数能被讲清楚、能被检查的技能。
-> 更新：2026-11-21
-> 仓库：开发仓 `harold-tsui/harold-machine-dev`（私有）；发布仓 `harold-tsui/harold-machine`（公开），内容由开发仓 `src/` 生成。入口 `using-harold-machine/` 建议单独链接，业务技能按需逐个链接。
-> 过程记录（盘点、迁移台账、试跑与修复）见 `dev/docs/migration-log.md`。
-> 下图为发布仓布局；开发仓把技能放在 `src/`，目录、留档与对外文档放在 `dev/`。
-> 对外文档：`README.md` 定位｜`INSTALL.md` 安装｜`USAGE.md` 使用手册（位于仓库根目录；开发仓源文件在 `dev/public/`）。
+> 定位：面向生产使用的可分发技能库。可复用、可验收；不做技能合集，只做少数能被讲清楚、能被检查的技能。
+> 下图为仓库布局。入口 `using-harold-machine/` 建议单独链接，业务技能按需逐个链接。
 
 ---
 
@@ -67,21 +63,21 @@ harold-machine/
 └── evals/          # 验收用例：输入 → 期望特征
 ```
 
-- slug 统一为 `harold-<层>-<技能>`，全小写 ASCII；层目录统一为 `0N-<层词>`，层词与 slug 中段一致：`01-governance`(gov) / `02-decision` / `03-research` / `04-production` / `05-operations`(ops)。入口技能 `using-harold-machine` 是唯一例外，与 `using-superpowers`、`using-nucleus` 同构。
+- slug 统一为 `harold-<层>-<技能>`，全小写 ASCII；层目录统一为 `0N-<层词>`，层词与 slug 中段一致：`01-governance`(gov) / `02-decision` / `03-research` / `04-production` / `05-operations`(ops)。入口技能 `using-harold-machine` 是唯一例外。
 - 一个技能 = 一个文件夹，文件夹名就是 slug，入口只有一个 `SKILL.md`。
 - `using-harold-machine` 是唯一入口技能：每轮先分诊到唯一主技能；它只做路由，不承接业务交付，不计入「业务技能」上限（18 个）。
-- 同层第 2 个技能接在后面，如 `harold-gov-vetter`、`harold-gov-registry`，放进 `01-governance/` 与已有技能**并列**，不放进它的文件夹里。
+- 同层要新增第 2 个技能，放进同一层目录与已有技能**并列**，不放进已有技能的文件夹里。
 - 新增层才加新数字目录；不做二级分类，避免同一职能被拆散。
 - `references/`、`evals/` 是技能的内部件，不是独立技能。
 - 中文名只出现在 description 与标题，不进目录名。
 - SKILL.md 必含：触发场景 / 工作流 / 输出格式 / **验收标准** / Gotchas（≥3 条，写失败模式而非注意事项）。
 - 每个技能必须带 `evals/cases.md`；`SKILL.md` 的验收标准与 `evals` 评分表条数、顺序、语义一一对应。
-- 不放 README、CHANGELOG、INSTALL 等辅助文档。
+- 技能目录内不放 README、CHANGELOG 等辅助文档；对外文档只放在仓库根目录。
 
 ### 准入四问（全部为"是"才建）
 
 1. 模型默认会不会做错？——做得好就不该建。
-2. 有没有独家资产？——Harold 的判断、SecondBrain 数据、组织口径、真实模板。
+2. 有没有独家资产？——作者的判断、自有数据、行业口径、真实模板。
 3. 能不能验收？——写得出可检查的通过 / 不通过。
 4. 会不会重复发生？——每月 ≥2 次，或单次代价极高。
 
@@ -150,7 +146,7 @@ using-harold-machine                      ← 先分诊：本轮用哪个技能�
 
 ## 三、明确不做
 
-- 不做技能超市：业务技能常驻控制在 18 个以内（当前 18），另设 1 个入口分诊技能 `using-harold-machine`，宁缺毋滥。
+- 不做技能超市：业务技能常驻控制在 18 个以内（共 18 个），另设 1 个入口分诊技能 `using-harold-machine`，宁缺毋滥。
 - 不封装模型原生能力：搜索、写代码、读文件、常规写作。
 - 不复制开源文件：只借鉴交互设计与流程结构；官方能力直接用官方版。
 - 不建无验收的技能：写不出"怎样算通过"就不建。
