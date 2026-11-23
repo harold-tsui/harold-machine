@@ -1,121 +1,113 @@
 # 安装
 
-三种安装方式，按客户端能力选一种。装完必须过一遍文末的验证。
+安装只做一件事：**让你所用客户端的技能目录里，出现 `<技能名>/SKILL.md`**。
 
-## 前置：先拿到仓库
+命令、路径、系统差异都是这一件事的实现细节，随客户端版本变动。本文定义契约，给出一个参考实现；具体路径以你的客户端文档为准。
+
+## 契约
+
+四条同时满足即安装成功，与用什么手段放进去无关：
+
+| 条件 | 说明 |
+|---|---|
+| 有技能根目录 | 客户端启动时扫描该目录，位置由客户端决定 |
+| 一技能一目录 | 子目录名即技能名，与 `SKILL.md` 的 `name` 一致 |
+| `SKILL.md` 在目录根部 | 不是平铺的单个文件，也不是多套一层 |
+| frontmatter 完整 | 至少含 `name`、`description`，缺 `name` 无法注册 |
+
+本仓每个技能目录都满足后三条。所以安装动作只剩第一条：把目录放进客户端扫描的位置。
+
+## 四步
+
+**1. 拿到仓库**
 
 ```bash
 git clone https://github.com/harold-tsui/harold-machine.git
 cd harold-machine
 ```
 
-后续命令都在这个目录里执行。下文用 `$REPO` 指代仓库绝对路径。
+**2. 找到客户端的技能根目录**
 
-## 方式一：软链接（推荐）
+在客户端文档里搜这几类词：`skills directory`、`skills root`、`技能目录`、`SKILL.md location`；配置项可能叫 custom skills folder、additional skills path。
 
-技能目录留在仓库里，客户端只放链接。改一次仓库，客户端跟着生效；更新只需 `git pull`。
+本文示例一律用 `$SKILLS` 占位，不写死任何平台路径——写死即为过期来源。
 
-以 Claude Code 为例：
+**3. 放进去**
+
+两种手段择一，契约相同：
+
+- **链接**：仓库更新后自动生效，前提是客户端跟随软链接
+- **复制**：客户端不跟随软链接，或你要冻结当前版本；更新需手动重放
 
 ```bash
-REPO="$(pwd)"
-mkdir -p ~/.claude/skills
+REPO="$PWD"
+SKILLS="<你的客户端技能根目录>"
 
-# 入口技能
-ln -s "$REPO/using-harold-machine" ~/.claude/skills/using-harold-machine
+# 入口技能（建议必装）
+ln -s "$REPO/using-harold-machine" "$SKILLS/using-harold-machine"
 
-# 业务技能：装哪些链哪些
-ln -s "$REPO/02-decision/harold-decision-review" ~/.claude/skills/harold-decision-review
-ln -s "$REPO/04-production/harold-production-pack" ~/.claude/skills/harold-production-pack
+# 业务技能按需逐个链接
+ln -s "$REPO/04-production/harold-production-pack" "$SKILLS/harold-production-pack"
 ```
 
-要装全量：
+全量 19 个一起装：
 
 ```bash
 find "$REPO" -mindepth 2 -maxdepth 3 -name SKILL.md -print0 \
   | xargs -0 -n1 dirname \
-  | while read -r d; do ln -sfn "$d" ~/.claude/skills/"$(basename "$d")"; done
+  | while read -r d; do ln -sfn "$d" "$SKILLS/$(basename "$d")"; done
 ```
 
-这条命令会把 18 个业务技能和入口一起链进去。只想要其中几个，就手动 `ln -s`，不要跑全量。
+深度取 3 是为了覆盖仓库根下的入口技能，它比层目录里的技能浅一层。复制安装把 `ln -sfn "$d"` 换成 `cp -R "$d" "$SKILLS/"` 即可。
 
-## 方式二：复制
+不必一次装全：先装入口加一个最常用技能，跑通再扩。上下游关系见 [CATALOG.md](CATALOG.md)。
 
-客户端不支持软链接、或需要固定版本快照时用复制。
-
-```bash
-cp -R "$REPO/using-harold-machine" ~/.claude/skills/
-cp -R "$REPO/04-production/harold-production-pack" ~/.claude/skills/
-```
-
-代价是要手动同步：仓库更新后，复制的目录不会变，需要重新 `cp -R`。
-
-## 方式三：整仓指向
-
-客户端支持指定一个 skills 根目录时，直接把仓库根目录指过去。此时层目录（`01-governance` 等）也会被扫描，是否可用取决于客户端是否递归查找。
-
-不确定客户端行为时，用方式一，逐个链接最可控。
-
-## 装什么，先装什么
-
-不必一次装全。建议顺序：
-
-| 阶段 | 装什么 | 为什么 |
-|---|---|---|
-| 第一轮 | `using-harold-machine` + 一个最常用的业务技能 | 在真实任务里验证分诊是否准 |
-| 第二轮 | 再接该技能的上下游 | 例如 `production-topic` → `production-copy` → `ops-wechat` |
-| 稳定后 | 按层补齐 | 参照 [CATALOG.md](CATALOG.md) 的调用关系图 |
-
-入口技能建议必装：它负责判断"这轮该用哪个技能"，没有它，其余技能只能靠你手动点名。
-
-## 验证
+**4. 验证**
 
 三条都要过：
 
-1. **目录结构**：技能名对应目录，目录内有 `SKILL.md`。
-
 ```bash
-ls -l ~/.claude/skills/harold-production-pack/SKILL.md
+# 结构：数量与预期一致
+ls "$SKILLS"/*/SKILL.md | wc -l
+
+# 可达：能读到文件，链接安装再看指向
+ls "$SKILLS/harold-production-pack/SKILL.md"
+readlink "$SKILLS/harold-production-pack"
 ```
 
-2. **软链接未断**：链接指向仓库内真实目录。
+第三条只能人工判断：新开一个会话，问"这个任务该用哪个技能"，或直接说某个技能的触发说法。旧会话有缓存，重启后再测。
 
-```bash
-readlink ~/.claude/skills/harold-production-pack
-ls ~/.claude/skills/harold-production-pack/SKILL.md
-```
+## 不在本文范围
 
-第一条输出应是 `$REPO/04-production/harold-production-pack`；第二条报 "No such file" 说明链接已断。
+以下都不改变契约，因此不展开：
 
-3. **能被路由命中**：在客户端里问一句"这个任务该用哪个技能"，或直接触发某个技能的触发说法（见其 `SKILL.md` 的「触发场景」）。能被正确调用，说明客户端已读到技能。
+- **系统与 shell 差异**：Windows 用 `New-Item -ItemType SymbolicLink` 或直接复制目录，语义等价
+- **客户端额外配置**：启用开关、白名单、云同步、权限
+- **分发方式**：包管理器、版本锁定、插件市场
 
-## 更新
+契约不满足时，换再多命令都没用；契约满足后，细节随意。
+
+## 更新与卸载
+
+**更新**：让仓库变新即可。
 
 ```bash
 cd "$REPO" && git pull
 ```
 
-软链接方式装的不需要额外操作。复制方式装的要重新执行 `cp -R`，或删掉旧目录再复制。
+链接安装立即生效；复制安装要重放第 3 步。
 
-## 卸载
+**卸载**：删掉你放进去的那些目录或链接，不动仓库本体。
 
-删除链接或目录，不要删仓库本体：
+## 排错：先定位违反哪条契约
 
-```bash
-rm ~/.claude/skills/harold-production-pack   # 软链用 rm，不加 -r
-rm -rf ~/.claude/skills/harold-production-pack  # 复制安装的用 rm -rf
-```
-
-确认没有别的技能指向同一目录后再删。
-
-## 排错
-
-| 现象 | 原因 | 处理 |
+| 现象 | 违反的条件 | 处理 |
 |---|---|---|
-| 客户端完全看不到技能 | 放了 `SKILL.md` 文件，没放目录 | 客户端读的是 `<skill-name>/SKILL.md`，目录必须存在 |
-| 链接存在但技能不生效 | 用相对路径建的软链，换工作目录后失效 | 删掉重建，源路径写绝对路径 |
-| 两个同名技能互相覆盖 | 不同来源装了同一个 slug | `ls -l` 看链接指向，保留一个 |
-| 更新后行为没变 | 复制方式安装，未同步 | 重新 `cp -R`，或改用软链接 |
-| 入口技能装了但从不触发 | 客户端会自动匹配 description；触发说法没命中 | 直接点名"用 using-harold-machine 分诊"，或读 [USAGE.md](USAGE.md) 的触发示例 |
+| 客户端完全看不到技能 | `SKILL.md` 不在目录根部 | 确认是 `<技能名>/SKILL.md`，不是平铺文件 |
+| 技能列出来但无法调用 | frontmatter 缺 `name` 或与目录名不一致 | 改 `SKILL.md` 的 `name`，不要改目录名 |
+| 链接在，技能不生效 | 软链用了相对路径，或客户端不跟随链接 | 改为绝对路径，或改用复制 |
+| 两个同名技能互相覆盖 | 同名目录被装了两份 | 保留一份，检查是否来自不同来源 |
+| 更新后行为没变 | 复制安装未重放 | 重新复制，或改用链接 |
+| 入口装了却从不触发 | 客户端按 `description` 匹配，没有强触发 | 直接点名分诊，见 [USAGE.md](USAGE.md) |
 
-装完进入 [USAGE.md](USAGE.md)，看第一轮任务怎么走。
+装完进入 [USAGE.md](USAGE.md)，看一轮任务怎么走。

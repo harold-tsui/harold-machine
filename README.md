@@ -60,7 +60,7 @@ git clone https://github.com/harold-tsui/harold-machine.git
 | 文件 | 回答什么问题 |
 |---|---|
 | `README.md` | 这是什么、值不值得用（本文件） |
-| [INSTALL.md](INSTALL.md) | 怎么装、怎么更新、装坏了怎么查 |
+| [INSTALL.md](INSTALL.md) | 安装契约、四步落地、违反契约怎么查 |
 | [USAGE.md](USAGE.md) | 每天怎么用、什么时候用哪一层、常见误用 |
 | [CATALOG.md](CATALOG.md) | 18 个技能分别解决什么、怎么串起来 |
 
